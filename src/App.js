@@ -15,7 +15,15 @@ class App extends React.Component {
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleClick=this.handleClick.bind(this);
     this.handleClear=this.handleClear.bind(this);
+    this.handleBack=this.handleBack.bind(this);
   }
+
+    handleBack(){
+      var ans= this.state.input;
+      this.setState({
+        input : ans.substr(0,ans.length-1)
+      })
+    }
 
     handleClick(eve){
       this.setState({
@@ -25,10 +33,25 @@ class App extends React.Component {
 
 
     handleSubmit(){
-      this.setState({
-        input : eval(this.state.input)
-      })
+     var ans=" ";
+      try {
+        ans= eval(this.state.input)
+     } catch (error) {
+      return this.setState({
+        input : "Math Error"
+     })
     }
+    if(ans===undefined){
+      this.setState({
+        input : "Divide by zero"
+     })
+    }
+    else{
+      this.setState({
+        input : ans
+     })
+    }
+  }
 
     handleClear(){
       this.setState({
@@ -70,7 +93,12 @@ class App extends React.Component {
             <td><input type="button" name="zero" value="0" onClick={this.handleClick}/></td>
             <td><input type="button" name="doit" value="=" onClick={this.handleSubmit}/></td>
             <td><input type="button" class="operator" name="div" value="/" onClick={this.handleClick}/></td>
-      </tr>
+        </tr>
+        <tr>
+            <td><input type="button" id="dot" name="dot" value="." onClick={this.handleClick}/></td>
+            <td><input type="button" name="perctange" value="%" onClick={this.handleClick}/></td>
+            <td><input type="button" name="back" value="<-" onClick={this.handleBack}/></td>
+        </tr>
         </table>
         </form>
         </div>
